@@ -1,14 +1,10 @@
 import React from 'react';
-import ComponentA from './components/ComponentA';
-import ComponentB from './components/ComponentB';
-import ComponentC from './components/ComponentC';
+import Home from './views/home';
 
 const App = () => {
   return (
     <div>
-      <ComponentA />
-      <ComponentB />
-      <ComponentC />
+      <Home/>
     </div>
   );
 };
