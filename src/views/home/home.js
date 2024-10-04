@@ -4,7 +4,7 @@ import AltText from "@utils/altText.txt"
 const Home = () => {
   const [product, setProduct] = useState([]);
   const fetchData = async() =>{
-    const response = await fetch(process.env.REACT_APP_API_URL);
+    const response = await fetch(process.env.API_URL);
     const data = await response.json();
     setProduct(data.products.slice(0,10));
   }
