@@ -1,17 +1,26 @@
-$primary_bgcolor:rgb(214, 240, 240);
+$primary_bgcolor:rgb(243, 243, 243);
+$primary_fontfamily: Arial, Helvetica, sans-serif;
 
 .productDiv{
-    border: 1px solid #aaa;
-    width: 150px;
+    //border: 1px solid #aaa;
+    box-shadow: 0px 0px 5px #c6c6c6;
+    width: 200px;
+    height: 250px;
     font-size: 15px;
     padding: 10px;
     margin: 10px;
     background-color: $primary_bgcolor;
+    font-family: $primary_fontfamily;
 
+}
+h3{
+    font-size: 30px;
+    font-family: $primary_fontfamily;
+    padding: 0 10px;
 }
 .productDiv img{
     width: 100%;
-    height: 100px;
+    height: 80%
 }
 .ProductContainer{
 

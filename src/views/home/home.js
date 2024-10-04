@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AltText from "./altText.txt"
+import AltText from "@utils/altText.txt"
 
 const Home = () => {
 
@@ -9,7 +9,7 @@ const Home = () => {
   const fetchData = async() =>{
     const response = await fetch('https://dummyjson.com/products');
     const data = await response.json();
-    setProduct(data.products);
+    setProduct(data.products.slice(0,10));
 
   }
 
