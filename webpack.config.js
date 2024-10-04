@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.jsx', // Entry point for your app
@@ -14,11 +15,22 @@ module.exports = {
         exclude: /node_modules/, // Exclude node_modules
         use: {
           loader: 'babel-loader', // Use Babel for transpiling
+          options:{
+            presets: ["@babel/preset-env", "@babel/preset-react"]
+          }
         },
       },
       {
         test: /\.css$/, // Handle CSS files
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/, // Handle CSS files
+        use: ['style-loader', 'css-loader','sass-loader'],
+      },
+      {
+        test: /\.txt$/, // Handle CSS files
+        type: 'asset/source',
       },
     ],
   },
