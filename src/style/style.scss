@@ -4,11 +4,11 @@ $primary_bgcolor: #f3f3f3;
 $primary_fontfamily: 'Arial', 'Helvetica', sans-serif;
 $card_shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 $hover_shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-$accent_color: #007bff;
+$accent_color: #0056b3; // Adjusted to a more accessible blue
 $border_radius: 12px;
 $transition_duration: 0.3s;
-$text_color: #333;
-$secondary_color: #ff6f61;
+$text_color: #212121; // Changed to darker gray for better contrast
+$secondary_color: #e63946; // Accessible red for hover state
 
 .productDiv {
   background-color: $primary_bgcolor;
@@ -20,7 +20,7 @@ $secondary_color: #ff6f61;
   margin: 20px;
   font-family: $primary_fontfamily;
   font-size: 16px;
-  color: $text_color;
+  color: $text_color; // Improved contrast
   text-align: center;
   transition: box-shadow $transition_duration ease-in-out, transform $transition_duration ease-in-out;
 
@@ -42,14 +42,14 @@ $secondary_color: #ff6f61;
   span {
     font-size: 16px;
     font-weight: bold;
-    color: $accent_color;
+    color: $accent_color; // Improved accessible color
     margin-top: 10px;
     display: block;
     text-transform: uppercase;
     letter-spacing: 1px;
 
     &:hover {
-      color: $secondary_color;
+      color: $secondary_color; // Accessible hover state
       text-decoration: underline;
     }
   }

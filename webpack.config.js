@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // Add the BundleAnalyzerPlugin
 
 // Load environment variables from .env file
 const env = dotenv.config().parsed;
@@ -56,6 +57,12 @@ module.exports = {
     }),
     // Inject environment variables into the app
     new webpack.DefinePlugin(envKeys),
+    // Add the BundleAnalyzerPlugin for performance analysis
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static', // Generates a static HTML report
+      openAnalyzer: false, // Prevents the report from automatically opening
+      reportFilename: 'bundle-report.html', // The name of the report file
+    }),
   ],
   devServer: {
     static: path.resolve(__dirname, 'dist'), // Serve content from dist
