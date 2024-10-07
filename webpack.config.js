@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // Add the BundleAnalyzerPlugin
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Load environment variables from .env file
 const env = dotenv.config().parsed;
@@ -57,6 +58,11 @@ module.exports = {
     }),
     // Inject environment variables into the app
     new webpack.DefinePlugin(envKeys),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/assets', to: 'assets' }, // Example: Copy assets folder
+      ],
+    }),
     // Add the BundleAnalyzerPlugin for performance analysis
     new BundleAnalyzerPlugin({
       analyzerMode: 'static', // Generates a static HTML report

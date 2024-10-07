@@ -14,20 +14,6 @@ const Home = () => {
   },[])
 
   return (<>
-    {/* <ul>
-      <li>Login/Logout</li>
-      <li>
-        Home (Category)
-        <ul>
-          <li>Category Item</li>
-          <li>Product lists</li>
-          <li>Product details page</li>
-        </ul>
-      </li>
-      <li>Cart</li>
-      <li>About Us</li>
-      <li>Contact Us</li>
-    </ul> */}
     <h3>Product list</h3>
     <div className="ProductContainer">
       {product.map((curr, index)=>{
