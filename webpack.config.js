@@ -44,6 +44,10 @@ module.exports = {
         test: /\.txt$/, // Handle text files
         type: 'asset/source',
       },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,  // For handling image files
+        type: 'asset/resource',        // Webpack 5 asset handling method
+      },
     ],
   },
   resolve: {
@@ -60,7 +64,7 @@ module.exports = {
     new webpack.DefinePlugin(envKeys),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'public/assets', to: 'assets' }, // Example: Copy assets folder
+        { from: 'src/assets', to: 'src/assets' }, // Example: Copy assets folder
       ],
     }),
     // Add the BundleAnalyzerPlugin for performance analysis
