@@ -80,5 +80,5 @@ module.exports = {
     port: 3000, // Development server port
     hot: true, // Enable hot module replacement
   },
-  mode: 'development', // Set mode to development for unminified code
+  //mode: 'development', // Set mode to development for unminified code
 };
