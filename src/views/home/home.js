@@ -32,7 +32,7 @@ const Home = () => {
       </div>
 
       {isDataLoaded && (
-        <div>
+        <div className="webImageDiv">
           <img src={webImage} alt="Webpack in React" />
         </div>
       )}
