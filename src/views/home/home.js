@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AltText from "@utils/altText.txt";
-import webImage from '../../assets/webpack_react.png';
+import webImage from '../../assets/product_list.png';
 
 const Home = () => {
   const [product, setProduct] = useState([]);
@@ -19,7 +19,10 @@ const Home = () => {
 
   return (
     <>
-      <h3>Product list</h3>
+      <div className="HeaderContainer">
+        <h3>Product list</h3>
+        <img src={webImage} alt="List of Products" />
+      </div>
       <div className="ProductContainer">
         {product.map((curr, index) => {
           return (
@@ -30,12 +33,6 @@ const Home = () => {
           );
         })}
       </div>
-
-      {isDataLoaded && (
-        <div className="webImageDiv">
-          <img src={webImage} alt="Webpack in React" />
-        </div>
-      )}
     </>
   );
 };
