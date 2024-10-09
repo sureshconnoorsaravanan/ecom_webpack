@@ -74,11 +74,11 @@ module.exports = {
       reportFilename: 'bundle-report.html', // The name of the report file
     }),
   ],
-  devServer: {
+  /* devServer: {
     static: path.resolve(__dirname, 'dist'), // Serve content from dist
     compress: true,
     port: 3000, // Development server port
     hot: true, // Enable hot module replacement
-  },
+  }, */
   //mode: 'development', // Set mode to development for unminified code
 };
