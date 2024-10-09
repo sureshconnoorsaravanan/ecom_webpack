@@ -1,18 +1,18 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // Add the BundleAnalyzerPlugin
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const Dotenv = require("dotenv-webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer"); // Add the BundleAnalyzerPlugin
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-// Load environment variables from .env file
-const env = dotenv.config().parsed;
+// // Load environment variables from .env file
+// const env = dotenv.config().parsed;
 
-// Create an object that Webpack can use to inject environment variables into the app
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next]);
-  return prev;
-}, {});
+// // Create an object that Webpack can use to inject environment variables into the app
+// const envKeys = Object.keys(env).reduce((prev, next) => {
+//   prev[`process.env.${next}`] = JSON.stringify(env[next]);
+//   return prev;
+// }, {});
 
 module.exports = {
   entry: "./src/index.jsx", // Entry point for your app
@@ -62,7 +62,9 @@ module.exports = {
       template: "./public/index.html", // Use index.html as template
     }),
     // Inject environment variables into the app
-    new webpack.DefinePlugin(envKeys),
+    new Dotenv({
+      path: `./.env.${process.env.NODE_ENV}`, // Loads .env.development, .env.production etc.
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: "src/assets", to: "src/assets" }, // Example: Copy assets folder
