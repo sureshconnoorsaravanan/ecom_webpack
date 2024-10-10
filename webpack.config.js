@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const Dotenv = require("dotenv-webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer"); // Add the BundleAnalyzerPlugin
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -15,7 +15,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 // }, {});
 
 module.exports = {
-  entry: "./src/index.jsx", // Entry point for your app
+  entry: "./src/index.tsx", // Entry point for your app
   output: {
     path: path.resolve(__dirname, "dist"), // Output folder
     filename: "bundle.js", // Bundle file
@@ -23,14 +23,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, // Handle .js and .jsx files
-        exclude: /node_modules/, // Exclude node_modules
-        use: {
-          loader: "babel-loader", // Use Babel for transpiling
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-          },
-        },
+        test: /\.(ts|tsx)$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/, // Handle CSS files
@@ -51,7 +46,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"], // Resolve these file types
+    extensions: [".js", ".jsx", ".ts", ".tsx"], // Resolve these file types
     alias: {
       "@utils": path.resolve(__dirname, "src/utils/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
