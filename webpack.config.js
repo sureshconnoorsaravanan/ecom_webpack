@@ -1,24 +1,14 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const webpack = require('webpack');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer"); // Add the BundleAnalyzerPlugin
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-// // Load environment variables from .env file
-// const env = dotenv.config().parsed;
-
-// // Create an object that Webpack can use to inject environment variables into the app
-// const envKeys = Object.keys(env).reduce((prev, next) => {
-//   prev[`process.env.${next}`] = JSON.stringify(env[next]);
-//   return prev;
-// }, {});
-
 module.exports = {
-  entry: "./src/index.tsx", // Entry point for your app
+  entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"), // Output folder
-    filename: "bundle.js", // Bundle file
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
   },
   module: {
     rules: [
@@ -28,25 +18,25 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/, // Handle CSS files
+        test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.scss$/, // Handle SCSS files
+        test: /\.scss$/,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.txt$/, // Handle text files
+        test: /\.txt$/,
         type: "asset/source",
       },
       {
-        test: /\.(png|jpg|gif|svg)$/i, // For handling image files
+        test: /\.(png|jpg|gif|svg)$/i,
         type: "asset/resource", // Webpack 5 asset handling method
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"], // Resolve these file types
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
     alias: {
       "@utils": path.resolve(__dirname, "src/utils/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
@@ -54,9 +44,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html", // Use index.html as template
+      template: "./public/index.html",
     }),
-    // Inject environment variables into the app
     new Dotenv({
       path: `./.env.${process.env.NODE_ENV}`, // Loads .env.development, .env.production etc.
     }),
@@ -72,11 +61,4 @@ module.exports = {
       reportFilename: "bundle-report.html", // The name of the report file
     }),
   ],
-  /* devServer: {
-    static: path.resolve(__dirname, 'dist'), // Serve content from dist
-    compress: true,
-    port: 3000, // Development server port
-    hot: true, // Enable hot module replacement
-  }, */
-  //mode: 'development', // Set mode to development for unminified code
 };

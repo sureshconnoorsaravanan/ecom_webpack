@@ -10,11 +10,10 @@ $transition_duration: 0.3s;
 $text_color: #212121;
 $secondary_color: #e63946;
 
-// Header container for image and h3
 .HeaderContainer {
   display: flex;
-  align-items: center; // Vertically center the items
-  justify-content: space-between; // Horizontally center the content
+  align-items: center;
+    justify-content: space-between;
   padding: 0 40px;
 
   img {
@@ -27,8 +26,8 @@ $secondary_color: #e63946;
     font-family: $primary_fontfamily;
     color: color.scale($text_color, $lightness: -10%);
     text-align: center;
-    border-bottom: none; // Remove the bottom border
-    margin: 0; // Remove the margin for better alignment
+    border-bottom: none;
+      margin: 0;
   }
 }
 
