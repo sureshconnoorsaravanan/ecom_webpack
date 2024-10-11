@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
+  "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js --open",
   "build:dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js",
-  "build:prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
+  "build:prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
+  "serve:dev": "npm run build:dev && live-server dist --host=localhost --port=8080 --entry-file=index.html",
+  "serve:prod": "npm run build:prod && live-server dist --host=localhost --port=8080 --entry-file=index.html"
 },
   "keywords": [],
   "author": "",

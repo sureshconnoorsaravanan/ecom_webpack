@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AltText from "@utils/altText.txt";
 import webImage from "@assets/product_list.png";
 
+// Define types for the product data
 interface Product {
   id: number;
   title: string;
@@ -11,9 +12,11 @@ interface Product {
 }
 
 const Home: React.FC = () => {
+  // Type for product state: array of Product objects
   const [product, setProduct] = useState<Product[]>([]);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false); // Type as boolean
 
+  // Fetching data from API
   const fetchData = async (): Promise<void> => {
     setIsDataLoaded(true);
     try {
@@ -33,29 +36,30 @@ const Home: React.FC = () => {
     fetchData();
   }, []);
 
+  // Determine the environment
+  const environment = process.env.NODE_ENV === 'production' ? 'Production Mode' : 'Development Mode';
+
   return (
     <>
+      <h3 className="centered-header">{environment}</h3>
+      
       <div className="HeaderContainer">
-        {process.env.NODE_ENV === 'production' ? <h1>Production Mode</h1> : <h1>Development Mode</h1>}
         <h3>Product list</h3>
         <img src={webImage} alt="List of Products" />
       </div>
 
       <div className="ProductContainer">
-        
         {isDataLoaded ? (
           <h1>Loading...</h1>
         ) : (
-          product.map((curr: Product, index: number) => {
-            return (
-              <div className="productDiv" key={curr.id}>
+          product.map((curr: Product) => (
+            <div className="productDiv" key={curr.id}>
                 <img alt={curr.title || AltText} src={curr.image || curr.images[0]} />
-                <span>
-                  {curr.title} - {curr.category.toUpperCase()}
-                </span>
-              </div>
-            );
-          })
+              <span>
+                {curr.title} - {curr.category.toUpperCase()}
+              </span>
+            </div>
+          ))
         )}
       </div>
     </>

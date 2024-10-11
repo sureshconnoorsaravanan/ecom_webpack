@@ -10,10 +10,19 @@ $transition_duration: 0.3s;
 $text_color: #212121;
 $secondary_color: #e63946;
 
+.centered-header {
+  font-size: 30px;
+  text-align: center;
+  padding: 20px 0;
+  background-color: $primary_bgcolor;
+  box-shadow: $card_shadow;
+  margin: 10px 40px 10px 40px;
+}
+
 .HeaderContainer {
   display: flex;
   align-items: center;
-    justify-content: space-between;
+  justify-content: space-between;
   padding: 0 40px;
 
   img {
@@ -27,7 +36,7 @@ $secondary_color: #e63946;
     color: color.scale($text_color, $lightness: -10%);
     text-align: center;
     border-bottom: none;
-      margin: 0;
+    margin: 0;
   }
 }
 
