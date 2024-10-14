@@ -9,6 +9,8 @@ interface Product {
   description: string;
   category: string;
   image: string;
+  images: string[];
+  //products: string[];
 }
 
 // Define the state interface
@@ -29,8 +31,9 @@ const initialState: ProductState = {
 export const getList = createAsyncThunk<Product[]>(
   'getProductList',
   async () => {
-    const response = await axios.get<Product[]>(process.env.API_URL+'/products');
-    return response.data; // This will be typed as an array of Product
+    const response = await axios.get/* <Product[]> */(process.env.API_URL+'/products');
+    //return response.data; // This will be typed as an array of Product
+    return process.env.NODE_ENV === 'production' ? response.data.products : response.data
   }
 );
 
