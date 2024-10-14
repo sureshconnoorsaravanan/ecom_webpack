@@ -1,68 +1,34 @@
-import React, { useEffect, useState } from "react";
-import AltText from "@utils/altText.txt";
-import webImage from "@assets/product_list.png";
-
-// Define types for the product data
-interface Product {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  images: string[];
-}
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchProducts } from "../../store/productSlice";
+import ProductList from "../../components/ProductList";
+import webImage from "../../assets/product_list.png";
 
 const Home: React.FC = () => {
-  // Type for product state: array of Product objects
-  const [product, setProduct] = useState<Product[]>([]);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false); // Type as boolean
-
-  // Fetching data from API
-  const fetchData = async (): Promise<void> => {
-    setIsDataLoaded(true);
-    try {
-      const response = await fetch(`${process.env.API_URL}/products`);
-      const data = await response.json();
-      console.log(data)
-      const productData = process.env.NODE_ENV === 'production' ? data.products : data
-      setProduct(productData.slice(0, 10));
-    } catch (error) {
-      console.error("Failed to fetch products", error);
-    } finally {
-      setIsDataLoaded(false);
-    }
-  };
+  const dispatch = useAppDispatch();
+  const { products, isLoading } = useAppSelector((state) => state.products);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  // Determine the environment
-  const environment = process.env.NODE_ENV === 'production' ? 'Production Mode' : 'Development Mode';
+  const environment = process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV';
 
   return (
-    <>
-      <h3 className="centered-header">{environment}</h3>
+    <div className="home">
+      <h3 className="centered-header">Production Mode - {environment} Env</h3>
       
-      <div className="HeaderContainer">
+      <div className="header-container">
         <h3>Product list</h3>
         <img src={webImage} alt="List of Products" />
       </div>
 
-      <div className="ProductContainer">
-        {isDataLoaded ? (
-          <h1>Loading...</h1>
-        ) : (
-          product.map((curr: Product) => (
-            <div className="productDiv" key={curr.id}>
-                <img alt={curr.title || AltText} src={curr.image || curr.images[0]} />
-              <span>
-                {curr.title} - {curr.category.toUpperCase()}
-              </span>
-            </div>
-          ))
-        )}
-      </div>
-    </>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <ProductList products={products} />
+      )}
+    </div>
   );
 };
 

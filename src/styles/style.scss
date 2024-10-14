@@ -19,7 +19,7 @@ $secondary_color: #e63946;
   margin: 10px 40px 10px 40px;
 }
 
-.HeaderContainer {
+.header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,7 +40,7 @@ $secondary_color: #e63946;
   }
 }
 
-.productDiv {
+.product-div {
   background-color: $primary_bgcolor;
   border-radius: $border_radius;
   box-shadow: $card_shadow;
@@ -85,7 +85,7 @@ $secondary_color: #e63946;
   }
 }
 
-.ProductContainer {
+.product-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

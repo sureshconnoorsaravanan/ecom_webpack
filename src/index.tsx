@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './style/style.scss';
+import './styles/style.scss';
 
 const rootElement = document.getElementById('root');
 
