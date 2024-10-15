@@ -1,115 +1,79 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
-import Home from './home';
+import { render, screen } from "@testing-library/react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Home from "./home";
 
-// Mock the fetch function
-global.fetch = jest.fn() as jest.MockedFunction<typeof fetch>;
+// Mock the necessary modules and components
+jest.mock("../../store/hooks");
+jest.mock("../../store/slices/productSlice", () => ({
+  fetchProducts: jest.fn(),
+}));
+jest.mock("../../components/ProductList/ProductList", () => () => <div>Mocked ProductList</div>);
+jest.mock("../../assets/product_list.png", () => "mockedImage.png");
 
-// Mock environment variables
-process.env.API_URL = 'https://fakestoreapi.com';
-process.env.NODE_ENV = 'development';
+describe("Home Component", () => {
+  const mockDispatch = jest.fn();
+  const mockUseAppSelector = useAppSelector as jest.Mock;
+  const mockUseAppDispatch = useAppDispatch as jest.Mock;
 
-interface Product {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  images: string[];
-}
-
-const mockProducts: Product[] = [
-  { id: 1, title: 'Product 1', category: 'category1', image: 'image1.jpg', images: ['image1.jpg'] },
-  { id: 2, title: 'Product 2', category: 'category2', image: 'image2.jpg', images: ['image2.jpg'] },
-];
-
-describe('Home Component', () => {
   beforeEach(() => {
-    (global.fetch as jest.Mock).mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockProducts),
-    });
+    mockUseAppDispatch.mockReturnValue(mockDispatch);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks(); // Clear mocks after each test
   });
 
-  test('renders the correct environment header', async () => {
-    await act(async () => {
-      render(<Home />);
-    });
-    expect(screen.getByText('Production Mode - DEV Env')).toBeInTheDocument();
-  });
-
-  test('renders the product list header and image', async () => {
-    await act(async () => {
-      render(<Home />);
-    });
-    expect(screen.getByText('Product list')).toBeInTheDocument();
-    expect(screen.getByAltText('List of Products')).toBeInTheDocument();
-  });
-
-  test('displays loading state initially', async () => {
+  it("should dispatch fetchProducts on component mount", () => {
+    mockUseAppSelector.mockReturnValue({ products: [], isLoading: false });
     render(<Home />);
-  
-    // Wait for the loading text to appear
-    const loadingText = await screen.findByText('Loading...');
-    expect(loadingText).toBeInTheDocument();
-  });
-  
-  test('fetches and displays products correctly', async () => {
-    await act(async () => {
-      render(<Home />);
-    });
-    await waitFor(() => {
-      expect(screen.getByText('Product 1 - CATEGORY1')).toBeInTheDocument();
-      expect(screen.getByText('Product 2 - CATEGORY2')).toBeInTheDocument();
-    });
+
+    expect(mockDispatch).toHaveBeenCalled(); // Verify fetchProducts was dispatched
   });
 
-  test('displays product images with correct alt text', async () => {
-    await act(async () => {
-      render(<Home />);
-    });
-    await waitFor(() => {
-      const productImages = screen.getAllByRole('img');
-      expect(productImages).toHaveLength(3); // 2 products + 1 header image
-      expect(productImages[1]).toHaveAttribute('alt', 'Product 1');
-      expect(productImages[2]).toHaveAttribute('alt', 'Product 2');
-    });
+  it("should display loading state when products are being fetched", () => {
+    mockUseAppSelector.mockReturnValue({ products: [], isLoading: true });
+    render(<Home />);
+
+    const loadingText = screen.getByText(/loading.../i);
+    expect(loadingText).toBeInTheDocument(); // Ensure loading text is displayed
   });
 
-  test('handles API error gracefully', async () => {
-    (global.fetch as jest.Mock).mockRejectedValue(new Error('API Error'));
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  it("should render ProductList component when products are loaded", () => {
+    const mockProducts = [
+      { id: 1, title: "Product 1", category: "category1", image: "image1.jpg", images: [] },
+      { id: 2, title: "Product 2", category: "category2", image: "image2.jpg", images: [] },
+    ];
 
-    await act(async () => {
-      render(<Home />);
-    });
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch products', expect.any(Error));
-    });
+    mockUseAppSelector.mockReturnValue({ products: mockProducts, isLoading: false });
+    render(<Home />);
 
-    consoleSpy.mockRestore();
+    const productList = screen.getByText("Mocked ProductList");
+    expect(productList).toBeInTheDocument(); // Verify ProductList is rendered
   });
 
-  test('limits the number of displayed products to 10', async () => {
-    const manyProducts: Product[] = Array.from({ length: 15 }, (_, i) => ({
-      id: i + 1,
-      title: `Product ${i + 1}`,
-      category: `category${i + 1}`,
-      image: `image${i + 1}.jpg`,
-      images: [`image${i + 1}.jpg`],
-    }));
+  it("should display 'Production Mode' text with the correct environment", () => {
+    // Test in 'DEV' environment
+    process.env.NODE_ENV = "development";
+    mockUseAppSelector.mockReturnValue({ products: [], isLoading: false });
+    render(<Home />);
 
-    (global.fetch as jest.Mock).mockResolvedValue({
-      json: jest.fn().mockResolvedValue(manyProducts),
-    });
+    const headerDev = screen.getByText(/Production Mode - DEV Env/i);
+    expect(headerDev).toBeInTheDocument(); // Verify DEV message is displayed
 
-    await act(async () => {
-      render(<Home />);
-    });
-    await waitFor(() => {
-      const productElements = screen.getAllByText(/Product \d+/);
-      expect(productElements).toHaveLength(10);
-    });
+    // Test in 'PROD' environment
+    process.env.NODE_ENV = "production";
+    render(<Home />);
+
+    const headerProd = screen.getByText(/Production Mode - PROD Env/i);
+    expect(headerProd).toBeInTheDocument(); // Verify PROD message is displayed
+  });
+
+  it("should display the webImage with the correct alt text", () => {
+    mockUseAppSelector.mockReturnValue({ products: [], isLoading: false });
+    render(<Home />);
+
+    const imageElement = screen.getByAltText(/List of Products/i);
+    expect(imageElement).toBeInTheDocument(); // Verify the image is present
+    expect(imageElement).toHaveAttribute("src", "mockedImage.png"); // Ensure correct src is used
   });
 });

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProducts } from "../../store/productSlice";
-import ProductList from "../../components/ProductList";
+import { fetchProducts } from "../../store/slices/productSlice";
+import ProductList from "../../components/ProductList/ProductList";
 import webImage from "../../assets/product_list.png";
 
 const Home: React.FC = () => {
