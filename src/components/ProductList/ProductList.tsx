@@ -1,5 +1,5 @@
 import React from "react";
-import AltText from "../utils/altText.txt";
+import { DEFAULT_ALT_TEXT } from "../../constants/altText";
 
 interface Product {
   id: number;
@@ -19,7 +19,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
       {products.map((product) => (
         <div className="product-div" key={product.id}>
           <img 
-            alt={product.title || AltText} 
+            alt={product.title || DEFAULT_ALT_TEXT} 
             src={product.image || product.images[0]} 
           />
           <span>

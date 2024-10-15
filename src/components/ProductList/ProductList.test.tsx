@@ -1,8 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import ProductList from "./ProductList";
-
-// Mock the alt text file import
-jest.mock("../utils/altText.txt", () => "Alt Text");
+import { DEFAULT_ALT_TEXT } from "../../constants/altText";
 
 describe("ProductList Component", () => {
   const mockProducts = [
@@ -65,7 +63,7 @@ describe("ProductList Component", () => {
       { id: 3, title: "", category: "category3", image: "", images: ["image5.jpg"] },
     ];
     render(<ProductList products={productsWithoutTitle} />);
-    const fallbackAltText = screen.getByAltText("Alt Text"); // Testing fallback alt text
+    const fallbackAltText = screen.getByAltText(DEFAULT_ALT_TEXT); // Testing fallback alt text
     expect(fallbackAltText).toBeInTheDocument();
   });
 
