@@ -40,6 +40,7 @@ module.exports = {
     alias: {
       "@utils": path.resolve(__dirname, "src/utils/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
+      "@theme": path.resolve(__dirname, "src/theme/"),
     },
   },
   plugins: [

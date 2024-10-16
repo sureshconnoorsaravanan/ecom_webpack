@@ -70,7 +70,7 @@ $secondary_color: #e63946;
   }
 
   span {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: $accent_color;
     margin-top: 10px;
@@ -89,7 +89,6 @@ $secondary_color: #e63946;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 20px;
 
   @media screen and (max-width: 768px) {
     .productDiv {

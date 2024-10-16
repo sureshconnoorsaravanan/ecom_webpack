@@ -3,12 +3,11 @@ import { store } from './store/store';
 import Home from './views/home/home';
 
 const App = () => {
+
   return (
-    <Provider store={store}>
-      <div>
+      <Provider store={store}>
         <Home/>
-      </div>
-    </Provider>
+      </Provider>
   );
 };
 
