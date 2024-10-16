@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProducts } from "../../store/slices/productSlice";
-import ProductList from "../../components/ProductList/ProductList";
-import webImage from "../../assets/product_list.png";
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchProducts } from '../../store/slices/productSlice';
+import ProductList from '../../components/ProductList/ProductList';
+import webImage from '../../assets/product_list.png';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading, error } = useAppSelector((state) => state.products);
+  const { products, isLoading, error } = useAppSelector(state => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <h3 className="centered-header">Production Mode - {environment} Env</h3>
-      
+
       <div className="header-container">
         <h3>Product list</h3>
         <img src={webImage} alt="List of Products" />
