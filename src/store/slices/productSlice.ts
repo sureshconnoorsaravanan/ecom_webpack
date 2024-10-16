@@ -1,34 +1,30 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { Product } from '../../types/productTypes';
 
-interface Product {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  images: string[];
-}
-
-interface ProductState {
+export interface ProductState {
   products: Product[];
   isLoading: boolean;
   error: string | null;
 }
 
+// Define the initial state
 const initialState: ProductState = {
   products: [],
   isLoading: false,
   error: null,
 };
 
+// Create an async thunk for fetching products
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async () => {
-    const response = await fetch(`${process.env.API_URL}/products`);
-    const data = await response.json();
-    return process.env.NODE_ENV === 'production' ? data.products : data;
+    const response = await axios.get(`${process.env.API_URL}/products`);
+    return process.env.NODE_ENV === 'production' ? response.data.products : response.data;
   }
 );
 
+// Create a slice for the products
 const productSlice = createSlice({
   name: 'products',
   initialState,
@@ -37,10 +33,12 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Product[]>) => {
+      .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Product[] | { products: Product[] }>) => {
         state.isLoading = false;
-        state.products = action.payload.slice(0, 10);
+        const products = Array.isArray(action.payload) ? action.payload : action.payload?.products || []; 
+        state.products = products.slice(0, 10); // Limit to 10 products
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;
@@ -49,4 +47,5 @@ const productSlice = createSlice({
   },
 });
 
+// Export the reducer
 export default productSlice.reducer;

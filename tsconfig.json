@@ -9,6 +9,7 @@
       "strict": true,
       "forceConsistentCasingInFileNames": true,
       "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": false,
       "module": "esnext",
       "moduleResolution": "node",
       "resolveJsonModule": true,
@@ -16,6 +17,6 @@
       "jsx": "react-jsx",
       "types": ["@testing-library/jest-dom", "jest", "node"]
     },
-    "include": ["src", "custom.d.ts", "test", "jest.setup.ts"]
+    "include": ["src", "custom.d.ts", "test", "jest.setup.ts"],
   }
   

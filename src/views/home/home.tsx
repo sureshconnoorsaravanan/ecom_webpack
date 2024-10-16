@@ -6,7 +6,7 @@ import webImage from "../../assets/product_list.png";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector((state) => state.products);
+  const { products, isLoading, error } = useAppSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -25,6 +25,8 @@ const Home: React.FC = () => {
 
       {isLoading ? (
         <h1>Loading...</h1>
+      ) : error ? (
+        <h1>Error: {error}</h1>
       ) : (
         <ProductList products={products} />
       )}
