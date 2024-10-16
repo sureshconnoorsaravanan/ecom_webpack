@@ -3,10 +3,10 @@ const common = require('./webpack.config.js');
 const path = require('path');
 
 module.exports = merge(common, {
-  mode: "development",
-  devtool: "inline-source-map", // Enable source maps for easier debugging
+  mode: 'development',
+  devtool: 'inline-source-map', // Enable source maps for easier debugging
   devServer: {
-    static: path.resolve(__dirname, "dist"),
+    static: path.resolve(__dirname, 'dist'),
     compress: true,
     port: 3000,
   },

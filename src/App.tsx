@@ -5,9 +5,11 @@ import Home from './views/home/home';
 const App = () => {
 
   return (
-      <Provider store={store}>
-        <Home/>
-      </Provider>
+    <Provider store={store}>
+      <div>
+        <Home />
+      </div>
+    </Provider>
   );
 };
 

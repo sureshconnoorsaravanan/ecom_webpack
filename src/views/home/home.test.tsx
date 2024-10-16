@@ -6,14 +6,14 @@ import { ThemeProvider } from "../../context/theme/themeContext"; // Adjust the 
 import { fetchProducts } from "../../store/slices/productSlice";
 
 // Mock the necessary modules and components
-jest.mock("../../store/hooks");
-jest.mock("../../store/slices/productSlice", () => ({
+jest.mock('../../store/hooks');
+jest.mock('../../store/slices/productSlice', () => ({
   fetchProducts: jest.fn(),
 }));
-jest.mock("../../components/ProductList/ProductList", () => () => <div>Mocked ProductList</div>);
-jest.mock("../../assets/product_list.png", () => "mockedImage.png");
+jest.mock('../../components/ProductList/ProductList', () => () => <div>Mocked ProductList</div>);
+jest.mock('../../assets/product_list.png', () => 'mockedImage.png');
 
-describe("Home Component", () => {
+describe('Home Component', () => {
   const mockDispatch = jest.fn();
   const mockUseAppSelector = useAppSelector as jest.Mock;
   const mockUseAppDispatch = useAppDispatch as jest.Mock;
@@ -50,16 +50,16 @@ describe("Home Component", () => {
     expect(loadingText).toBeInTheDocument(); // Ensure loading text is displayed
   });
 
-  it("should render ProductList component when products are loaded", () => {
+  it('should render ProductList component when products are loaded', () => {
     const mockProducts = [
-      { id: 1, title: "Product 1", category: "category1", image: "image1.jpg", images: [] },
-      { id: 2, title: "Product 2", category: "category2", image: "image2.jpg", images: [] },
+      { id: 1, title: 'Product 1', category: 'category1', image: 'image1.jpg', images: [] },
+      { id: 2, title: 'Product 2', category: 'category2', image: 'image2.jpg', images: [] },
     ];
 
     mockUseAppSelector.mockReturnValue({ products: mockProducts, isLoading: false, error: null });
     renderWithProviders(<Home />); // Use custom render function
 
-    const productList = screen.getByText("Mocked ProductList");
+    const productList = screen.getByText('Mocked ProductList');
     expect(productList).toBeInTheDocument(); // Verify ProductList is rendered
   });
 
@@ -96,6 +96,6 @@ describe("Home Component", () => {
 
     const imageElement = screen.getByAltText(/List of Products/i);
     expect(imageElement).toBeInTheDocument(); // Verify the image is present
-    expect(imageElement).toHaveAttribute("src", "mockedImage.png"); // Ensure correct src is used
+    expect(imageElement).toHaveAttribute('src', 'mockedImage.png'); // Ensure correct src is used
   });
 });

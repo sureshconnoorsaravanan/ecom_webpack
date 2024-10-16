@@ -6,7 +6,7 @@ import Navbar from "../../components/navbar/navbar";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading, error } = useAppSelector((state) => state.products);
+  const { products, isLoading, error } = useAppSelector(state => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());

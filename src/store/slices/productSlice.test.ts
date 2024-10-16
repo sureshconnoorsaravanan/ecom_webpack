@@ -6,22 +6,24 @@ import { AppDispatch } from '../store';
 
 const mockProducts = {
   nonProd: [
-    { 
-      id: 1, 
-      title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops", 
-      category: "men's clothing", 
-      image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" 
-    }
+    {
+      id: 1,
+      title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+      category: "men's clothing",
+      image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+    },
   ],
   prod: [
     {
       id: 1,
-      title: "Essence Mascara Lash Princess",
-      description: "Popular mascara known for its volumizing effects.",
-      category: "beauty",
-      images: ["https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"],
-    }
-  ]
+      title: 'Essence Mascara Lash Princess',
+      description: 'Popular mascara known for its volumizing effects.',
+      category: 'beauty',
+      images: [
+        'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png',
+      ],
+    },
+  ],
 };
 
 interface TestState {
@@ -33,10 +35,10 @@ describe('productSlice', () => {
   let store: ReturnType<typeof configureStore<TestState>>;
   let dispatch: AppDispatch;
 
-  const initialState: ProductState = { 
-    products: [], 
-    isLoading: false, 
-    error: null 
+  const initialState: ProductState = {
+    products: [],
+    isLoading: false,
+    error: null,
   };
 
   const setupStore = () => configureStore<TestState>({ reducer: { products: productReducer } });
@@ -64,27 +66,30 @@ describe('productSlice', () => {
   });
 
   it('should handle fetchProducts.fulfilled with products array', () => {
-    const action = { 
-      type: fetchProducts.fulfilled.type, 
-      payload: [{ id: 1, title: 'Product 1' }, { id: 2, title: 'Product 2' }] 
+    const action = {
+      type: fetchProducts.fulfilled.type,
+      payload: [
+        { id: 1, title: 'Product 1' },
+        { id: 2, title: 'Product 2' },
+      ],
     };
     const expectedState = { ...initialState, isLoading: false, products: action.payload };
     expect(productReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle fetchProducts.fulfilled with products object', () => {
-    const action = { 
-      type: fetchProducts.fulfilled.type, 
-      payload: Array(10).fill({ id: 1, title: 'Product' }) 
+    const action = {
+      type: fetchProducts.fulfilled.type,
+      payload: Array(10).fill({ id: 1, title: 'Product' }),
     };
     const expectedState = { ...initialState, isLoading: false, products: action.payload };
     expect(productReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle fetchProducts.rejected', () => {
-    const action = { 
-      type: fetchProducts.rejected.type, 
-      error: { message: 'Network error' } 
+    const action = {
+      type: fetchProducts.rejected.type,
+      error: { message: 'Network error' },
     };
     const expectedState = { ...initialState, isLoading: false, error: 'Network error' };
     expect(productReducer(initialState, action)).toEqual(expectedState);
@@ -104,7 +109,11 @@ describe('productSlice', () => {
     await dispatch(fetchProducts());
 
     const expectedProducts = env === 'production' ? mockData.products.slice(0, 10) : mockData;
-    expect(store.getState().products).toEqual({ ...initialState, products: expectedProducts, isLoading: false });
+    expect(store.getState().products).toEqual({
+      ...initialState,
+      products: expectedProducts,
+      isLoading: false,
+    });
 
     process.env.NODE_ENV = originalEnv;
   };
@@ -123,12 +132,19 @@ describe('productSlice', () => {
 
     const state = store.getState().products;
     expect(state.isLoading).toBe(false);
-    expect(productReducer(state, { type: fetchProducts.rejected.type, error: { message: 'Request failed with status code 500' } }))
-      .toEqual({ ...initialState, error: 'Request failed with status code 500' });
+    expect(
+      productReducer(state, {
+        type: fetchProducts.rejected.type,
+        error: { message: 'Request failed with status code 500' },
+      }),
+    ).toEqual({ ...initialState, error: 'Request failed with status code 500' });
   });
 
   it('should limit products to 10 items in production', async () => {
-    const manyProducts = Array.from({ length: 20 }, (_, i) => ({ id: i + 1, title: `Product ${i + 1}` }));
+    const manyProducts = Array.from({ length: 20 }, (_, i) => ({
+      id: i + 1,
+      title: `Product ${i + 1}`,
+    }));
     await testFetchProductsFulfilled('production', { products: manyProducts });
     expect(store.getState().products.products.length).toBe(10);
   });
