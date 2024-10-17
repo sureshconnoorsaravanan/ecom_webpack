@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import productReducer, { fetchProducts, ProductState } from './productSlice';
-import { AppDispatch } from '../store';
+import { AppDispatch } from '../../store';
 
 const mockProducts = {
   nonProd: [

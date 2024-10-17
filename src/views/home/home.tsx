@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProducts } from "../../store/slices/productSlice";
+import { fetchProducts } from "../../store/slices/products/productSlice";
 import ProductList from "../../components/ProductList/ProductList";
 import Navbar from "../../components/navbar/navbar";
 

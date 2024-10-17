@@ -10,34 +10,14 @@ $transition_duration: 0.3s;
 $text_color: #212121;
 $secondary_color: #e63946;
 
-.centered-header {
-  font-size: 30px;
-  text-align: center;
-  padding: 20px 0;
-  background-color: $primary_bgcolor;
-  box-shadow: $card_shadow;
-  margin: 10px 40px 10px 40px;
+body.light {
+  background-color: white;
+  color: black;
 }
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-
-  img {
-    width: 30px;
-    display: inline-block;
-  }
-
-  h3 {
-    font-size: 30px;
-    font-family: $primary_fontfamily;
-    color: color.scale($text_color, $lightness: -10%);
-    text-align: center;
-    border-bottom: none;
-    margin: 0;
-  }
+body.dark {
+  background-color: black;
+  color: white;
 }
 
 .product-div {
