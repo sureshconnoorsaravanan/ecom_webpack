@@ -8,11 +8,11 @@ jest.mock('../../store/hooks');
 jest.mock('../../store/slices/products/productSlice', () => ({
   fetchProducts: jest.fn(),
 }));
-jest.mock('../../components/ProductList/ProductList', () => () => <div>Mocked ProductList</div>);
-jest.mock('../../components/LanguageSwitch/LanguageSwitch', () => () => (
+jest.mock('../../components/ProductList/ProductList', () => <div>Mocked ProductList</div>);
+jest.mock('../../components/LanguageSwitch/LanguageSwitch', () =>  (
   <div>Mocked LanguageSwitch</div>
 ));
-jest.mock('../../components/navbar/navbar', () => () => <div>Mocked Navbar</div>);
+jest.mock('../../components/navbar/navbar', () => <div>Mocked Navbar</div>);
 
 describe('Home Component', () => {
   const mockDispatch = jest.fn();
