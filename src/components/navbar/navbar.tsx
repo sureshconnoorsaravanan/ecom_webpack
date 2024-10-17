@@ -28,9 +28,9 @@ const Navbar: React.FC = () => {
         <div className="theme-toggle">
           <img src={webImage} alt={t('productList')} />
           {currentTheme === 'light' ? (
-            <FaMoon onClick={handleToggle} />
+            <FaMoon onClick={handleToggle} color='black' />
           ) : (
-            <FaSun onClick={handleToggle} />
+            <FaSun onClick={handleToggle} color='white' />
           )}
         </div>
       </div>

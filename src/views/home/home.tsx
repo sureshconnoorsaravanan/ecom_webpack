@@ -4,7 +4,7 @@ import { fetchProducts } from '../../store/slices/products/productSlice';
 import ProductList from '../../components/ProductList/ProductList';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitch from '../../components/LanguageSwitch/LanguageSwitch';
-import Navbar from '../../components/navbar/Navbar';
+import Navbar from '../../components/navbar/navbar';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
       <LanguageSwitch />
 
       <div className="header-container">
-        <h3>{t('productList')}</h3>
+        <h3 data-testid="product-list-header">{t('productList')}</h3>
       </div>
 
       {isLoading ? (
