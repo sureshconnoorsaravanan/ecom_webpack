@@ -9,7 +9,9 @@ jest.mock('../../store/slices/products/productSlice', () => ({
   fetchProducts: jest.fn(),
 }));
 jest.mock('../../components/ProductList/ProductList', () => () => <div>Mocked ProductList</div>);
-jest.mock('../../components/LanguageSwitch/LanguageSwitch', () => () => <div>Mocked LanguageSwitch</div>);
+jest.mock('../../components/LanguageSwitch/LanguageSwitch', () => () => (
+  <div>Mocked LanguageSwitch</div>
+));
 jest.mock('../../components/navbar/navbar', () => () => <div>Mocked Navbar</div>);
 
 describe('Home Component', () => {
@@ -54,11 +56,11 @@ describe('Home Component', () => {
   });
 
   it('should display error message when there is an error', () => {
-    const errorMessage = 'error'; // Adjusted to the actual text being rendered
-  
+    const errorMessage = 'error';
+
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: false, error: errorMessage });
     render(<Home />);
-  
+
     const errorText = screen.getByText(/error/i); // Matching 'error' based on the DOM output
     expect(errorText).toBeInTheDocument();
   });
@@ -79,6 +81,6 @@ describe('Home Component', () => {
     render(<Home />);
 
     const headerText = screen.getByRole('heading', { name: /productList/i });
-expect(headerText).toBeInTheDocument();
+    expect(headerText).toBeInTheDocument();
   });
 });
