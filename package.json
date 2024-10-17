@@ -10,7 +10,7 @@
     "serve:prod": "npm run build:prod && live-server dist --host=localhost --port=8080 --entry-file=index.html",
     "test": "jest",
     "format": "prettier --write .",
-    "lint": "npx eslint \"src/**/*.{js,jsx,tsx}\" && echo \"No ESLint errors, all good!\""
+    "lint": "npx eslint \"src/**/*.{js,jsx,tsx}\" && node scripts/lint-success.js"
   },
   "keywords": [],
   "author": "",
