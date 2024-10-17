@@ -1,4 +1,3 @@
-// src/pages/Home.tsx
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchProducts } from '../../store/slices/products/productSlice';

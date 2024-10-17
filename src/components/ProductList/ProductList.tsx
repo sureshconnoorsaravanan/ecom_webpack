@@ -1,4 +1,3 @@
-// src/components/ProductList/ProductList.tsx
 import React from 'react';
 import { DEFAULT_ALT_TEXT } from '../../constants/altText';
 import { Product } from '../../types/productTypes';
