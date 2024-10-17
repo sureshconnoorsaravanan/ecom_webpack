@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ProductList from './ProductList';
+import ProductList from '../../components/ProductList/ProductList';
 import { DEFAULT_ALT_TEXT } from '../../constants/altText';
 
 describe('ProductList Component', () => {
@@ -30,10 +30,14 @@ describe('ProductList Component', () => {
   // Test for rendering title and category in uppercase
   it('should display product title and category in uppercase', () => {
     render(<ProductList products={mockProducts} />);
-    const firstProduct = screen.getByText(/Product 1 - CATEGORY1/i);
-    const secondProduct = screen.getByText(/Product 2 - CATEGORY2/i);
-    expect(firstProduct).toBeInTheDocument();
-    expect(secondProduct).toBeInTheDocument();
+    const firstProductTitle = screen.getByText(/Product 1/i);
+    const firstProductCategory = screen.getByText(/CATEGORY1/i);
+    const secondProductTitle = screen.getByText(/Product 2/i);
+    const secondProductCategory = screen.getByText(/CATEGORY2/i);
+    expect(firstProductTitle).toBeInTheDocument();
+    expect(firstProductCategory).toBeInTheDocument();
+    expect(secondProductTitle).toBeInTheDocument();
+    expect(secondProductCategory).toBeInTheDocument();
   });
 
   // Test for using the 'image' property

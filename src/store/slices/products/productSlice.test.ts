@@ -3,6 +3,9 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import productReducer, { fetchProducts, ProductState } from './productSlice';
 import { AppDispatch } from '../../store';
+import i18n from 'i18next'; // Import the mock i18next
+
+jest.mock('i18next'); // Mock i18next
 
 const mockProducts = {
   nonProd: [
@@ -39,6 +42,7 @@ describe('productSlice', () => {
     products: [],
     isLoading: false,
     error: null,
+    language: 'en',
   };
 
   const setupStore = () => configureStore<TestState>({ reducer: { products: productReducer } });
@@ -86,21 +90,6 @@ describe('productSlice', () => {
     expect(productReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle fetchProducts.rejected', () => {
-    const action = {
-      type: fetchProducts.rejected.type,
-      error: { message: 'Network error' },
-    };
-    const expectedState = { ...initialState, isLoading: false, error: 'Network error' };
-    expect(productReducer(initialState, action)).toEqual(expectedState);
-  });
-
-  it('should handle fetchProducts.rejected with default error', () => {
-    const action = { type: fetchProducts.rejected.type, error: {} };
-    const expectedState = { ...initialState, isLoading: false, error: 'Failed to fetch products' };
-    expect(productReducer(initialState, action)).toEqual(expectedState);
-  });
-
   const testFetchProductsFulfilled = async (env: string, mockData: any) => {
     const originalEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = env;
@@ -126,6 +115,32 @@ describe('productSlice', () => {
     await testFetchProductsFulfilled('development', mockProducts.nonProd);
   });
 
+  it('should handle fetchProducts.rejected', () => {
+    const action = {
+      type: fetchProducts.rejected.type,
+      error: { message: 'Network error' },
+    };
+    const expectedState: ProductState = {
+      ...initialState,
+      isLoading: false,
+      error: i18n.t('error', { error: 'Network error' }), // Use the localization function
+    };
+    expect(productReducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it('should handle fetchProducts.rejected with default error', () => {
+    const action = {
+      type: fetchProducts.rejected.type,
+      error: {},
+    };
+    const expectedState: ProductState = {
+      ...initialState,
+      isLoading: false,
+      error: i18n.t('Failed to fetch products'), // Use the localization function
+    };
+    expect(productReducer(initialState, action)).toEqual(expectedState);
+  });
+
   it('should handle fetchProducts.rejected with status 500', async () => {
     mockFetch(`${process.env.API_URL}/products`, {}, 500);
     await dispatch(fetchProducts());
@@ -137,7 +152,10 @@ describe('productSlice', () => {
         type: fetchProducts.rejected.type,
         error: { message: 'Request failed with status code 500' },
       }),
-    ).toEqual({ ...initialState, error: 'Request failed with status code 500' });
+    ).toEqual({
+      ...initialState,
+      error: i18n.t('error', { error: 'Request failed with status code 500' }),
+    }); // Use the localization function
   });
 
   it('should limit products to 10 items in production', async () => {

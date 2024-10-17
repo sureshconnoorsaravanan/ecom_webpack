@@ -1,0 +1,8 @@
+{
+  "mode": "Modo de producción",
+  "loading": "Cargando...",
+  "error": "{{error}}",
+  "productList": "Lista de productos",
+  "title": "Artículo",
+  "category": "Categoría"
+}

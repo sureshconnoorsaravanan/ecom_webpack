@@ -1,29 +1,39 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProducts } from "../../store/slices/products/productSlice";
-import ProductList from "../../components/ProductList/ProductList";
-import Navbar from "../../components/navbar/navbar";
+// src/pages/Home.tsx
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchProducts } from '../../store/slices/products/productSlice';
+import ProductList from '../../components/ProductList/ProductList';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitch from '../../components/LanguageSwitch/LanguageSwitch';
+import Navbar from '../../components/navbar/Navbar';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { products, isLoading, error } = useAppSelector(state => state.products);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-
   return (
-    <div>
-      <Navbar/>
-      <div className="container">
-        <h3 className="mt-4">List of products</h3>
+    <div className="main-container">
+      <Navbar />
+      <LanguageSwitch />
 
-      {isLoading ? 
-        <h3 className="mt-5 text-center">Loading...</h3>
-      : error ? <h1>Error: {error}</h1> : <ProductList products={products} />
-        }
+      <div className="header-container">
+        <h3>{t('productList')}</h3>
+      </div>
+
+      {isLoading ? (
+        <h1>{t('loading')}</h1>
+      ) : error ? (
+        <h1>{t('error')}</h1>
+      ) : (
+        <div className="product-list-container">
+          <ProductList products={products} />
         </div>
+      )}
     </div>
   );
 };

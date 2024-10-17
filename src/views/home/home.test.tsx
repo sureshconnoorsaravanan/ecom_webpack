@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import Home from "./home";
-import { fetchProducts } from "../../store/slices/products/productSlice";
+import { render, screen } from '@testing-library/react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import Home from './home';
+import { fetchProducts } from '../../store/slices/products/productSlice';
 
 // Mock the necessary modules and components
 jest.mock('../../store/hooks');
@@ -24,18 +24,18 @@ describe('Home Component', () => {
     jest.clearAllMocks(); // Clear mocks after each test
   });
 
-  it("should dispatch fetchProducts on component mount", () => {
+  it('should dispatch fetchProducts on component mount', () => {
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: false, error: null });
     render(<Home />); // Use custom render function
 
     expect(mockDispatch).toHaveBeenCalledWith(fetchProducts()); // Verify fetchProducts was dispatched
   });
 
-  it("should display loading state when products are being fetched", () => {
+  it('should display loading state when products are being fetched', () => {
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: true, error: null });
     render(<Home />); // Use custom render function
 
-    const loadingText = screen.getByText(/loading.../i);
+    const loadingText = screen.getByText(/loading/i);
     expect(loadingText).toBeInTheDocument(); // Ensure loading text is displayed
   });
 
@@ -52,9 +52,9 @@ describe('Home Component', () => {
     expect(productList).toBeInTheDocument(); // Verify ProductList is rendered
   });
 
-  it("should display error message when there is an error", () => {
-    const errorMessage = "Failed to fetch products";
-    
+  it('should display error message when there is an error', () => {
+    const errorMessage = 'Failed to fetch products';
+
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: false, error: errorMessage });
     render(<Home />); // Use custom render function
 
@@ -62,28 +62,28 @@ describe('Home Component', () => {
     expect(errorText).toBeInTheDocument(); // Ensure error message is displayed
   });
 
-  it("should display Navbar with the correct environment", () => {
+  it('should display Navbar with the correct environment', () => {
     // Test in 'DEV' environment
-    process.env.NODE_ENV = "development";
+    process.env.NODE_ENV = 'development';
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: false, error: null });
     render(<Home />); // Use custom render function
 
-    const headerDev = screen.getByText(/Production Mode - DEV Env/i);
+    const headerDev = screen.getByText(/mode - DEV Env/i);
     expect(headerDev).toBeInTheDocument(); // Verify DEV message is displayed
 
     // Test in 'PROD' environment
-    process.env.NODE_ENV = "production";
+    process.env.NODE_ENV = 'production';
     render(<Home />); // Use custom render function
 
-    const headerProd = screen.getByText(/Production Mode - PROD Env/i);
+    const headerProd = screen.getByText(/mode - PROD Env/i);
     expect(headerProd).toBeInTheDocument(); // Verify PROD message is displayed
   });
 
-  it("should display the webImage with the correct alt text", () => {
+  it('should display the webImage with the correct alt text', () => {
     mockUseAppSelector.mockReturnValue({ products: [], isLoading: false, error: null });
     render(<Home />); // Use custom render function
 
-    const imageElement = screen.getByAltText(/List of Products/i);
+    const imageElement = screen.getByAltText(/productList/i);
     expect(imageElement).toBeInTheDocument(); // Verify the image is present
     expect(imageElement).toHaveAttribute('src', 'mockedImage.png'); // Ensure correct src is used
   });
