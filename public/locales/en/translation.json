@@ -1,5 +1,5 @@
 {
-  "mode": "Production Mode",
+  "mode": "Production Mode - {{environment}} Environment",
   "loading": "Loading...",
   "error": "Error: {{error}}",
   "productList": "Product list",

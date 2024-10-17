@@ -1,5 +1,5 @@
 {
-  "mode": "生产模式",
+  "mode": "生产模式 - {{environment}} 环境",
   "loading": "加载中...",
   "error": "错误：{{error}}",
   "productList": "产品列表",

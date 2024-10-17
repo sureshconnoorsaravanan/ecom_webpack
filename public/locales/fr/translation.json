@@ -1,5 +1,5 @@
 {
-  "mode": "Mode de production",
+  "mode": "Mode de production - {{environment}} Environnement",
   "loading": "Chargement...",
   "error": "Erreur: {{error}}",
   "productList": "Liste des produits",
