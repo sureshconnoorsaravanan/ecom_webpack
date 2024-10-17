@@ -22,9 +22,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar-container">
       <div className="navbar-content">
-        <h3>
-        {t('mode', { environment })}
-        </h3>
+        <h3>{t('mode', { environment })}</h3>
         <div className="theme-toggle">
           <img src={webImage} alt={t('productList')} />
           {currentTheme === 'light' ? (
