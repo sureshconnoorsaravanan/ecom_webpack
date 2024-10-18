@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { DEFAULT_ALT_TEXT } from '../../constants/altText';
 import { Product } from '../../types/productTypes';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +10,28 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const { t } = useTranslation(); // Translation hook
 
-  return (
+  useEffect(() => {
+    const liveRegion = document.getElementById('product-count');
+    if (liveRegion) {
+      liveRegion.innerText = `${products.length} ${t('productsFound')}`;
+    }
+  }, [products, t]);
+
+  return (<>
+      <div 
+        id="product-count" 
+        aria-live="polite" 
+        aria-atomic="true" 
+        style={{ position: 'absolute', width: '1px', height: '1px', margin: '-1px', padding: '0', border: '0', clip: 'rect(0 0 0 0)', overflow: 'hidden' }}
+      >
+        {/* Dynamically update the total number of products */}
+        {products.length} {t('productsFound')}
+      </div>
     <div className="product-container">
       {products.map(product => (
-        <article
+        <div
           className="product-div"
           key={product.id}
-          role="region"
           aria-labelledby={`product-title-${product.id}`}
           aria-describedby={`product-category-${product.id}`}
           tabIndex={0} // Make the product container focusable for keyboard users
@@ -35,10 +50,11 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
               {t('category')}: {product.category?.toUpperCase() || 'Uncategorized'}
             </span>
           </section>
-        </article>
+        </div>
       ))}
     </div>
 
+  </>
   );
 };
 
