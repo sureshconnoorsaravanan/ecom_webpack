@@ -30,9 +30,13 @@ const Home: React.FC = () => {
         </div>
 
         {isLoading ? (
-          <h2 role="alert" aria-busy="true">{t('loading')}</h2>
+          <h2 role="alert" aria-busy="true">
+            {t('loading')}
+          </h2>
         ) : error ? (
-          <h2 role="alert" aria-live="assertive">{t('error')}</h2>
+          <h2 role="alert" aria-live="assertive">
+            {t('error')}
+          </h2>
         ) : (
           <section
             className="product-list-container"
@@ -44,7 +48,6 @@ const Home: React.FC = () => {
         )}
       </main>
     </div>
-
   );
 };
 

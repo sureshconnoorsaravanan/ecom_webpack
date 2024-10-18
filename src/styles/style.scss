@@ -125,7 +125,8 @@ $light_text_color: $text_color;
     transition: transform $transition_duration ease-in-out;
   }
 
-  span,.product-header {
+  span,
+  .product-header {
     font-size: 12px;
     font-weight: bold;
     color: $accent_color;

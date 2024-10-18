@@ -20,32 +20,22 @@ const Navbar: React.FC = () => {
     dispatch(toggleTheme());
   };
 
-    return (
-        <div className="bg-info">
-        <div className="py-4 d-flex align-items-center justify-content-between container">
-            <h1 id="environment-heading">Production Mode - {environment} Env</h1>
-            <div>
-            <img 
-                src={webImage} 
-                width={30} 
-                height={30} 
-                alt="List of Products" 
-                className="me-3" 
-                aria-hidden="true" // If the image is decorative and doesn't convey any essential information
-            />
-            <button 
-                onClick={handleToggle} 
-                aria-label={currentTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-                className="theme-toggle-btn"
-                aria-pressed={currentTheme === 'dark'} // Indicates the current state of the button for screen readers
-            >
-                {currentTheme === 'light' ? <FaMoon /> : <FaSun />}
-            </button>
-            </div>
+  return (
+    <div className="navbar-container">
+      <div className="navbar-content">
+        <h3>{t('mode', { environment })}</h3> {/* Ensure 'mode' is in translation.json */}
+        <div className="theme-toggle">
+          <img src={webImage} alt={t('productList')} />{' '}
+          {/* Ensure 'productList' is in translation.json */}
+          {currentTheme === 'light' ? (
+            <FaMoon onClick={handleToggle} />
+          ) : (
+            <FaSun onClick={handleToggle} />
+          )}
         </div>
-        </div>
-
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;

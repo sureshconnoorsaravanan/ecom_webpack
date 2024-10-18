@@ -28,7 +28,9 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
             style={{ width: '200px', height: '200px' }} // Ensure image size is appropriate
           />
           <header>
-            <h2 className='product-header' id={`product-title-${product.id}`}>{product.title || 'Untitled Product'}</h2>
+            <h2 className="product-header" id={`product-title-${product.id}`}>
+              {t('title')}: {product.title || 'Untitled Product'}
+            </h2>
           </header>
           <section id={`product-category-${product.id}`}>
             <span>
@@ -38,7 +40,6 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
         </article>
       ))}
     </div>
-
   );
 };
 
